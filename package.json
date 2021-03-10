@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "jest"
   },
   "repository": "https://github.com/Lambtsa/currency-app-api.git",
   "author": "Lambtsa <42414095+Lambtsa@users.noreply.github.com>",
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "eslint-config-salt": "^1.1.0",
-    "nodemon": "^2.0.7"
+    "jest": "^26.6.3",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }

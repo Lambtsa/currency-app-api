@@ -5,7 +5,7 @@ const app = express();
 app.get('/', (req, res) => {
   res
     .status(200)
-    .send('here');
+    .json({ message: 'You are at the root' });
 });
 
 module.exports = { app };
