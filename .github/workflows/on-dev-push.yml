@@ -1,0 +1,10 @@
+name: on-dev-push
+on: [push]
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm i eslint-config-salt
+      - run: npm run lint
