@@ -1,6 +1,11 @@
 const express = require('express');
+var cors = require('cors');
 
 const app = express();
+
+app.use(cors({
+  origin: 'https://lambtsa.github.io'
+}));
 
 app.get('/', (req, res) => {
   res
