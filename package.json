@@ -11,6 +11,10 @@
   "repository": "https://github.com/Lambtsa/currency-app-api.git",
   "author": "Lambtsa <42414095+Lambtsa@users.noreply.github.com>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lambtsa/currency-app-api/issues"
+  },
+  "homepage": "https://github.com/Lambtsa/currency-app-api#readme",
   "dependencies": {
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
