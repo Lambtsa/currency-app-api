@@ -1,10 +1,5 @@
 const express = require('express');
-const {
-  fetchCrypto,
-  fetchCurrencies,
-  createCryptoRatesObj,
-  createCurrencyRatesObj,
-} = require('../helpers');
+const { currencies } = require('../helpers');
 
 const router = express.Router();
 
@@ -14,26 +9,12 @@ router.get('/', (req, res) => {
     .json({ message: 'You are at the root' });
 });
 
-router.get('/crypto', async (req, res, next) => {
-  try {
-    const data = await fetchCrypto();
-    const crypto = createCryptoRatesObj(data);
-    res
-      .status(200)
-      .json(crypto);
-  } catch (err) {
-    // Need to handle this better
-    next(err);
-  }
-});
-
 router.get('/currencies', async (req, res, next) => {
   try {
-    const data = await fetchCurrencies();
-    const currencies = createCurrencyRatesObj(data);
+    const allCurrencies = await currencies();
     res
       .status(200)
-      .json(currencies);
+      .json(allCurrencies);
   } catch (err) {
     // Need to handle this better
     next(err);
