@@ -5,12 +5,12 @@ const routes = require('./routes');
 
 const app = express();
 
-const origin = process.env.NODE_ENV === "production" 
+const origin = process.env.NODE_ENV === 'production'
   ? 'https://lambtsa.github.io'
   : 'http://localhost:3000';
 
 app.use(cors({
-  origin: origin,
+  origin,
 }));
 
 app.use('/', routes);
