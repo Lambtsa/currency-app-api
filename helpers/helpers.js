@@ -1,14 +1,13 @@
 const filterCrypto = (data, crypto) => {
-  const rate = data
-    .filter(r => r.asset_id_quote === crypto)[0]
-    .rate;
+  const { rate } = data
+    .filter(r => r.asset_id_quote === crypto)[0];
   if (rate < 1) {
-    const rounded = Math.round(rate * 1000000)
-    return (rounded  / 1000000)
+    const rounded = Math.round(rate * 1000000);
+    return (rounded / 1000000)
       .toFixed(6);
   }
-  return rate.toFixed(4)
-}
+  return rate.toFixed(4);
+};
 
 module.exports.createCryptoRatesObj = data => ({
   baseCurrency: 'EUR',
@@ -55,12 +54,12 @@ module.exports.createCryptoRatesObj = data => ({
 const filterCurrencies = (data, currency) => {
   const rate = data[currency];
   if (rate < 1) {
-    const rounded = Math.round(rate * 1000000)
-    return (rounded  / 1000000)
+    const rounded = Math.round(rate * 1000000);
+    return (rounded / 1000000)
       .toFixed(6);
   }
-  return rate.toFixed(4)
-}
+  return rate.toFixed(4);
+};
 
 module.exports.createCurrencyRatesObj = data => ({
   baseCurrency: 'EUR',
