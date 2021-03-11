@@ -7,7 +7,7 @@ module.exports.fetchCrypto = () => fetch('https://rest.coinapi.io/v1/exchangerat
   method: 'GET',
   headers: {
     'Content-type': 'application/json',
-    'X-CoinAPI-Key': 'C293F3C9-F920-4E59-9AA9-BC49B2C015EC',
+    'X-CoinAPI-Key': process.env.COIN_API_KEY,
   },
 })
   .then(response => response.json());
