@@ -4,30 +4,107 @@ const filterCrypto = (data, crypto) => data
 
 module.exports.createCryptoRatesObj = data => ({
   baseCurrency: 'EUR',
-  rates: {
-    BTC: filterCrypto(data.rates, 'BTC'),
-    BCH: filterCrypto(data.rates, 'BCH'),
-    EOS: filterCrypto(data.rates, 'EOS'),
-    ETH: filterCrypto(data.rates, 'ETH'),
-    HBAR: filterCrypto(data.rates, 'HBAR'),
-  },
+  rates: [
+    {
+      name: 'BCH',
+      rate: filterCrypto(data.rates, 'BCH'),
+      logo: '/assets/flags/bch.webp',
+    },
+    {
+      name: 'BTC',
+      rate: filterCrypto(data.rates, 'BTC'),
+      logo: '/assets/flags/btc.webp',
+    },
+    {
+      name: 'EOS',
+      rate: filterCrypto(data.rates, 'EOS'),
+      logo: '/assets/flags/eos.webp',
+    },
+    {
+      name: 'ETH',
+      rate: filterCrypto(data.rates, 'ETH'),
+      logo: '/assets/flags/eth.webp',
+    },
+    {
+      name: 'HBAR',
+      rate: filterCrypto(data.rates, 'HBAR'),
+      logo: '/assets/flags/hbar.webp',
+    },
+    {
+      name: 'LTC',
+      rate: filterCrypto(data.rates, 'LTC'),
+      logo: '/assets/flags/ltc.webp',
+    },
+  ],
 });
 
 module.exports.createCurrencyRatesObj = data => ({
   baseCurrency: 'EUR',
-  rates: {
-    AUD: data.rates.AUD,
-    CAD: data.rates.CAD,
-    CHF: data.rates.CHF,
-    CNY: data.rates.CNY,
-    DKK: data.rates.DKK,
-    EUR: data.rates.EUR,
-    GBP: data.rates.GBP,
-    HKD: data.rates.HKD,
-    JPY: data.rates.JPY,
-    MXN: data.rates.MXN,
-    NOK: data.rates.NOK,
-    SEK: data.rates.SEK,
-    USD: data.rates.USD,
-  },
+  rates: [
+    {
+      name: 'AUD',
+      rate: data.rates.AUD,
+      logo: '/assets/flags/aud.webp',
+    },
+    {
+      name: 'CAD',
+      rate: data.rates.CAD,
+      logo: '/assets/flags/cad.webp',
+    },
+    {
+      name: 'CHF',
+      rate: data.rates.CHF,
+      logo: '/assets/flags/chf.webp',
+    },
+    {
+      name: 'CNY',
+      rate: data.rates.CNY,
+      logo: '/assets/flags/cny.webp',
+    },
+    {
+      name: 'DKK',
+      rate: data.rates.DKK,
+      logo: '/assets/flags/dkk.webp',
+    },
+    {
+      name: 'EUR',
+      rate: data.rates.EUR,
+      logo: '/assets/flags/eur.webp',
+    },
+    {
+      name: 'GBP',
+      rate: data.rates.GBP,
+      logo: '/assets/flags/gbp.webp',
+    },
+    {
+      name: 'HKD',
+      rate: data.rates.HKD,
+      logo: '/assets/flags/hkd.webp',
+    },
+    {
+      name: 'JPY',
+      rate: data.rates.JPY,
+      logo: '/assets/flags/jpy.webp',
+    },
+    {
+      name: 'MXN',
+      rate: data.rates.MXN,
+      logo: '/assets/flags/mxn.webp',
+    },
+    {
+      name: 'NOK',
+      rate: data.rates.NOK,
+      logo: '/assets/flags/nok.webp',
+    },
+    {
+      name: 'SEK',
+      rate: data.rates.SEK,
+      logo: '/assets/flags/sek.webp',
+    },
+    {
+      name: 'USD',
+      rate: data.rates.USD,
+      logo: '/assets/flags/usd.webp',
+    },
+  ],
 });

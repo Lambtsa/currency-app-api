@@ -5,6 +5,8 @@ const routes = require('./routes');
 
 const app = express();
 
+app.use(express.static('public'));
+
 const origin = process.env.NODE_ENV === 'production'
   ? 'https://lambtsa.github.io'
   : 'http://localhost:3000';
