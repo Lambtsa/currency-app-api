@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const routes = require('./routes');
 
 const app = express();
 
@@ -8,11 +9,7 @@ app.use(cors({
   origin: 'https://lambtsa.github.io',
 }));
 
-app.get('/', (req, res) => {
-  res
-    .status(200)
-    .json({ message: 'You are at the root' });
-});
+app.use('/', routes);
 
 app.use((req, res, next) => {
   const error = new Error('Not found');

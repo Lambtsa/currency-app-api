@@ -1,0 +1,35 @@
+{
+  "asset_id_base": "EUR",
+  "rates": [
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "BCH",
+        "rate": 1
+    },
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "BTC",
+        "rate": 2
+    },
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "EOS",
+        "rate": 3
+    },
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "ETH",
+        "rate": 4
+    },
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "HBAR",
+        "rate": 5
+    },
+    {
+        "time": "2021-03-11T09:14:00.0000000Z",
+        "asset_id_quote": "LTC",
+        "rate": 6
+    }
+  ]
+}

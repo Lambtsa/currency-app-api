@@ -4,8 +4,8 @@
   "description": "RESTful API for currency app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon",
     "lint": "eslint .",
     "test": "jest"
   },
@@ -16,6 +16,9 @@
     "url": "https://github.com/Lambtsa/currency-app-api/issues"
   },
   "homepage": "https://github.com/Lambtsa/currency-app-api#readme",
+  "nodemonConfig": {
+    "ignore": ["*.json"]
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
