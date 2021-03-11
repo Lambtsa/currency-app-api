@@ -1,5 +1,5 @@
-const crypto = require('../../data/mockData/mockCryptoData.json');
-const currencies = require('../../data/mockData/mockCurrencyData.json');
+const crypto = require('./mockData/mockCryptoData.json');
+const currencies = require('./mockData/mockCurrencyData.json');
 
 const fetch = filename => Promise.resolve(filename);
 
