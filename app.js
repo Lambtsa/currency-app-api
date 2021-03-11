@@ -2,10 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const routes = require('./routes');
+const { currencies } = require('./helpers');
 
 const app = express();
 
 app.use(express.static('public'));
+
+currencies();
+
+setInterval(() => {
+  currencies();
+}, 1000 * 60 * 60);
 
 const origin = process.env.NODE_ENV === 'production'
   ? 'https://lambtsa.github.io'
