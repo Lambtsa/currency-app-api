@@ -5,11 +5,11 @@ const filterCrypto = (data, crypto) => data
 module.exports.createCryptoRatesObj = data => ({
   baseCurrency: 'EUR',
   rates: {
-    btc: filterCrypto(data.rates, 'BTC'),
-    bch: filterCrypto(data.rates, 'BCH'),
-    eos: filterCrypto(data.rates, 'EOS'),
-    eth: filterCrypto(data.rates, 'ETH'),
-    hbar: filterCrypto(data.rates, 'HBAR'),
+    BTC: filterCrypto(data.rates, 'BTC'),
+    BCH: filterCrypto(data.rates, 'BCH'),
+    EOS: filterCrypto(data.rates, 'EOS'),
+    ETH: filterCrypto(data.rates, 'ETH'),
+    HBAR: filterCrypto(data.rates, 'HBAR'),
   },
 });
 
