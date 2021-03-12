@@ -21,7 +21,6 @@ const getCurrencies = async () => {
       ...currencyData.rates,
     ],
   };
-  console.log(updatedCurrencies);
   fs.writeFile(currenciesDir, JSON.stringify(updatedCurrencies), err => {
     if (err) {
       console.log(err);

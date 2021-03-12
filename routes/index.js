@@ -1,7 +1,9 @@
+const fs = require('fs');
 const express = require('express');
-const currencies = process.env.NODE_ENV === 'production'
-  ? require('../data/data/currencies.json')
-  : require('../data/mockData/currencies.json');
+
+const currenciesPath = process.env.NODE_ENV === 'production'
+  ? './data/data/currencies.json'
+  : './data/mockData/currencies.json';
 
 const router = express.Router();
 
@@ -13,6 +15,7 @@ router.get('/', (req, res) => {
 
 router.get('/currencies', async (req, res, next) => {
   try {
+    const currencies = JSON.parse(fs.readFileSync(currenciesPath));
     res
       .status(200)
       .json(currencies);
