@@ -1,12 +1,15 @@
+const fs = require('fs');
 require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const cors = require('cors');
 const { getCurrencies } = require('./helpers');
 const routes = require('./routes');
+const { sendEmails } = require('./helpers/sendEmails');
 
 const app = express();
 
+app.use(express.json());
 app.use(express.static('public'));
 
 const origin = process.env.NODE_ENV === 'production'
@@ -30,6 +33,17 @@ app.use('/', routes);
 cron.schedule('0 */1 * * *', async () => {
   try {
     await getCurrencies();
+    const emailsArray = JSON.parse(fs.readFileSync('./data/emails/emails.json'));
+    sendEmails(emailsArray);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+cron.schedule('0 0 1 * *', async () => {
+  try {
+    const emailsArray = JSON.parse(fs.readFileSync('./data/emails/emails.json'));
+    sendEmails(emailsArray);
   } catch (err) {
     console.log(err);
   }
