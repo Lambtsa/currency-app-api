@@ -1,18 +1,13 @@
 require('dotenv').config();
 const express = require('express');
+const cron = require('node-cron');
 const cors = require('cors');
+const { getCurrencies } = require('./helpers');
 const routes = require('./routes');
-const { currencies } = require('./helpers');
 
 const app = express();
 
 app.use(express.static('public'));
-
-currencies();
-
-setInterval(() => {
-  currencies();
-}, 1000 * 60 * 60);
 
 const origin = process.env.NODE_ENV === 'production'
   ? 'https://lambtsa.github.io'
@@ -23,6 +18,22 @@ app.use(cors({
 }));
 
 app.use('/', routes);
+
+(async () => {
+  try {
+    await getCurrencies();
+  } catch (err) {
+    console.log(err);
+  }
+})();
+
+cron.schedule('0 */1 * * *', async () => {
+  try {
+    await getCurrencies();
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.use((req, res, next) => {
   const error = new Error('Not found');

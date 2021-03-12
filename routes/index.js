@@ -1,5 +1,7 @@
 const express = require('express');
-const { currencies } = require('../helpers');
+const currencies = process.env.NODE_ENV === 'production'
+  ? require('../data/data/currencies.json')
+  : require('../data/mockData/currencies.json');
 
 const router = express.Router();
 
@@ -11,7 +13,7 @@ router.get('/', (req, res) => {
 
 router.get('/currencies', async (req, res, next) => {
   try {
-    const currencyData = await currencies();
+    const currencyData = await currencies;
     res
       .status(200)
       .json(currencyData);
