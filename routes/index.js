@@ -1,5 +1,6 @@
 const express = require('express');
 const repository = require('../db/repository');
+const { sendOwnerEmail } = require('../emails');
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post('/addEmail', (req, res, next) => {
   const { email } = req.body;
   repository.addEmail(email)
     .then(() => {
+      sendOwnerEmail(email)
       res
         .status(204)
         .send();
