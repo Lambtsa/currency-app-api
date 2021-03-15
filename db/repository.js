@@ -2,9 +2,18 @@ const db = require('./db');
 
 module.exports.getAllEmails = () => db.query('SELECT email FROM emails');
 
+module.exports.initialiseEmails = () => {
+  const initialiseEmailsQuery = `
+    DROP TABLE IF EXISTS Emails;
+    CREATE TABLE IF NOT EXISTS Emails (
+      id SERIAL PRIMARY KEY,
+      email VARCHAR NOT NULL
+  );`;
+  return db.query(initialiseEmailsQuery);
+};
 module.exports.addEmail = email => {
   const addEmailQuery = `
-  INSERT INTO EMAILS (email)
+  INSERT INTO Emails (email)
   VALUES (
     $1
   )`;
