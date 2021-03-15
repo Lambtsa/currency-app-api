@@ -14,7 +14,7 @@ router.post('/addEmail', (req, res, next) => {
   const { email } = req.body;
   repository.addEmail(email)
     .then(() => {
-      sendOwnerEmail(email)
+      sendOwnerEmail(email);
       res
         .status(204)
         .send();
