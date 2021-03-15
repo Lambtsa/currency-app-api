@@ -5,7 +5,7 @@ const cors = require('cors');
 const { getCurrencies } = require('./helpers');
 const routes = require('./routes');
 const repository = require('./db/repository');
-const { sendEmails } = require('./helpers/sendEmails');
+const { sendMonthlyEmail } = require('./emails');
 
 const app = express();
 
@@ -43,7 +43,7 @@ cron.schedule('0 0 1 * *', async () => {
   try {
     repository.getAllEmails()
       .then(data => {
-        sendEmails(data.rows);
+        sendMonthlyEmail(data.rows);
       });
   } catch (err) {
     console.log(err);

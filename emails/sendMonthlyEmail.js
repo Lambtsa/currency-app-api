@@ -10,7 +10,7 @@ const createMessage = receiver => ({
   html: '<strong>currency rates coming soon...</strong>',
 });
 
-const sendEmails = arrayOfUsers => {
+const sendMonthlyEmail = arrayOfUsers => {
   arrayOfUsers.forEach(user => {
     const msg = createMessage(user.email);
     sgMail
@@ -24,4 +24,6 @@ const sendEmails = arrayOfUsers => {
   });
 };
 
-module.exports.sendEmails = sendEmails;
+module.exports = {
+  sendMonthlyEmail,
+};
