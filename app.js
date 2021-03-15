@@ -24,6 +24,7 @@ app.use('/', routes);
 
 (async () => {
   try {
+    await repository.initialiseEmails();
     await getCurrencies();
   } catch (err) {
     console.log(err);
