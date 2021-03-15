@@ -6,11 +6,12 @@ const pool = new Pool({
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
-  max: 10, 
+  max: 10,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 2000,
 });
 
+/* eslint-disable */
 module.exports = {
-  query: async (text, params) => await pool.query(text, params)
+  query: async (text, params) => await pool.query(text, params),
 };

@@ -10,9 +10,9 @@ const createMessage = receiver => ({
   html: '<strong>currency rates coming soon...</strong>',
 });
 
-const sendEmails = arrayOfEmails => {
-  arrayOfEmails.forEach(email => {
-    const msg = createMessage(email);
+const sendEmails = arrayOfUsers => {
+  arrayOfUsers.forEach(user => {
+    const msg = createMessage(user.email);
     sgMail
       .send(msg)
       .then(() => {

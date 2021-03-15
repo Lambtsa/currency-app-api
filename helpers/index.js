@@ -1,11 +1,8 @@
-const fs = require('fs');
 const { fetchCrypto, fetchCurrencies } = process.env.NODE_ENV === 'production'
   ? require('./fetch/fetchData')
   : require('./fetch/mockFetchData');
 
-const currenciesDir = process.env.NODE_ENV === 'production'
-  ? './data/data/currencies.json'
-  : './data/mockData/currencies.json';
+const repository = require('../db/repository');
 
 const { createCryptoRatesObj, createCurrencyRatesObj } = require('./helpers');
 
@@ -21,12 +18,9 @@ const getCurrencies = async () => {
       ...currencyData.rates,
     ],
   };
-  fs.writeFile(currenciesDir, JSON.stringify(updatedCurrencies), err => {
-    if (err) {
-      console.log(err);
-    }
-    console.log('currency file created');
-  });
+  repository.addCurrencies(updatedCurrencies.rates)
+    .then()
+    .catch(err => console.log(err));
 };
 
 module.exports = {
