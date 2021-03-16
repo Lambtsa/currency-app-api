@@ -4,7 +4,6 @@ module.exports.getAllEmails = () => db.query('SELECT email FROM emails');
 
 module.exports.initialiseEmails = () => {
   const initialiseEmailsQuery = `
-    DROP TABLE IF EXISTS Emails;
     CREATE TABLE IF NOT EXISTS Emails (
       id SERIAL PRIMARY KEY,
       email VARCHAR NOT NULL
