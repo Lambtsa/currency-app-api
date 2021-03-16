@@ -1,11 +1,11 @@
-require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const cors = require('cors');
-const { getCurrencies } = require('./helpers');
 const routes = require('./routes');
-const repository = require('./db/repository');
-const { sendMonthlyEmail } = require('./emails');
+const { sendMonthlyEmail } = require('./modules/emails');
+const Email = require('./modules/schemas/emailsSchema');
+const CurrencyDB = require('./modules/schemas/currencySchema');
+const { getCurrencies } = require('./helpers');
 
 const app = express();
 
@@ -24,8 +24,16 @@ app.use('/', routes);
 
 (async () => {
   try {
-    await repository.initialiseEmails();
-    await getCurrencies();
+    const currencies = await getCurrencies();
+    currencies.forEach(currency => {
+      new CurrencyDB({
+        initials: currency.initials,
+        name: currency.name,
+        rate: currency.rate,
+        rateDelta: 0,
+        logo: currency.logo,
+      }).save();
+    });
   } catch (err) {
     console.log(err);
   }
@@ -33,7 +41,14 @@ app.use('/', routes);
 
 cron.schedule('0 */1 * * *', async () => {
   try {
-    await getCurrencies();
+    const updatedCurrencies = await getCurrencies();
+    updatedCurrencies.forEach(async currency => {
+      const oldCurrency = await CurrencyDB.find({ initials: currency.initials });
+      await CurrencyDB.findOneAndUpdate(
+        { initials: currency.initials },
+        { rate: currency.rate, rateDelta: ((currency.rate * 100) / oldCurrency[0].rate) },
+      );
+    });
   } catch (err) {
     console.log(err);
   }
@@ -41,10 +56,11 @@ cron.schedule('0 */1 * * *', async () => {
 
 cron.schedule('0 0 1 * *', async () => {
   try {
-    repository.getAllEmails()
-      .then(data => {
-        sendMonthlyEmail(data.rows);
-      });
+    const emailAddresses = await Email.find();
+    /* eslint-disable-next-line */
+    for (const emailObj of emailAddresses) {
+      sendMonthlyEmail(emailObj.email);
+    }
   } catch (err) {
     console.log(err);
   }
