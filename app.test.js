@@ -1,6 +1,5 @@
 const request = require('supertest');
 const { app } = require('./app');
-const updatedCurrencies = require('./data/mockData/currencies.json');
 
 describe('GET /', () => {
   test('responds with json', (done) => {
@@ -24,7 +23,6 @@ describe('GET /currencies', () => {
     .get('/currencies')
     .set('Accept', 'application/json')
     .expect('Content-Type', /json/)
-    .expect(updatedCurrencies)
     .expect(200, done)
   });
 });

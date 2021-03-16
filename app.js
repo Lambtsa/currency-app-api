@@ -1,11 +1,11 @@
-const fs = require('fs');
 require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
 const cors = require('cors');
 const { getCurrencies } = require('./helpers');
 const routes = require('./routes');
-const { sendEmails } = require('./helpers/sendEmails');
+const repository = require('./db/repository');
+const { sendMonthlyEmail } = require('./emails');
 
 const app = express();
 
@@ -24,6 +24,7 @@ app.use('/', routes);
 
 (async () => {
   try {
+    await repository.initialiseEmails();
     await getCurrencies();
   } catch (err) {
     console.log(err);
@@ -33,8 +34,6 @@ app.use('/', routes);
 cron.schedule('0 */1 * * *', async () => {
   try {
     await getCurrencies();
-    const emailsArray = JSON.parse(fs.readFileSync('./data/emails/emails.json'));
-    sendEmails(emailsArray);
   } catch (err) {
     console.log(err);
   }
@@ -42,8 +41,10 @@ cron.schedule('0 */1 * * *', async () => {
 
 cron.schedule('0 0 1 * *', async () => {
   try {
-    const emailsArray = JSON.parse(fs.readFileSync('./data/emails/emails.json'));
-    sendEmails(emailsArray);
+    repository.getAllEmails()
+      .then(data => {
+        sendMonthlyEmail(data.rows);
+      });
   } catch (err) {
     console.log(err);
   }

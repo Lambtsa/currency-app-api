@@ -1,9 +1,6 @@
-const fs = require('fs');
 const express = require('express');
-
-const currenciesPath = process.env.NODE_ENV === 'production'
-  ? './data/data/currencies.json'
-  : './data/mockData/currencies.json';
+const repository = require('../db/repository');
+const { sendOwnerEmail } = require('../emails');
 
 const router = express.Router();
 
@@ -13,33 +10,30 @@ router.get('/', (req, res) => {
     .json({ message: 'You are at the root' });
 });
 
-router.post('/addEmail', (req, res) => {
-  try {
-    const emailFilePath = './data/emails/emails.json';
-    const emails = JSON.parse(fs.readFileSync(emailFilePath));
-    const filteredEmails = emails.filter(e => e !== req.body.email);
-    const newEmails = [...filteredEmails, req.body.email];
-    fs.writeFile(emailFilePath, JSON.stringify(newEmails), err => {
-      if (err) {
-        console.log(err);
-      }
-      console.log('email file updated');
+router.post('/addEmail', (req, res, next) => {
+  const { email } = req.body;
+  repository.addEmail(email)
+    .then(() => {
+      sendOwnerEmail(email);
+      res
+        .status(204)
+        .send();
+    })
+    .catch(err => {
+      const error = err;
+      error.statusCode = 400;
+      next(error);
     });
-    res
-      .json({ message: 'Congratulations' });
-  } catch (err) {
-    res
-      .status(400)
-      .json({ message: 'This email is not correct' });
-  }
 });
 
-router.get('/currencies', async (req, res, next) => {
+router.get('/currencies', (req, res, next) => {
   try {
-    const currencies = JSON.parse(fs.readFileSync(currenciesPath));
-    res
-      .status(200)
-      .json(currencies);
+    repository.getAllCurrencies()
+      .then(data => {
+        res
+          .status(200)
+          .json(data.rows);
+      });
   } catch (err) {
     // Need to handle this better
     next(err);
