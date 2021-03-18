@@ -10,18 +10,16 @@ const createMessage = receiver => ({
   html: '<strong>currency rates coming soon...</strong>',
 });
 
-const sendMonthlyEmail = arrayOfUsers => {
-  arrayOfUsers.forEach(user => {
-    const msg = createMessage(user.email);
-    sgMail
-      .send(msg)
-      .then(() => {
-        console.log('Email sent');
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  });
+const sendMonthlyEmail = email => {
+  const msg = createMessage(email);
+  sgMail
+    .send(msg)
+    .then(() => {
+      console.log('Email sent');
+    })
+    .catch(error => {
+      console.error(error);
+    });
 };
 
 module.exports = {
