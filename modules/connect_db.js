@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const uri = `mongodb+srv://lambtsa:${process.env.MONGO_DB_PASSWORD}@lambtsacluster.ncmw7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = process.env.NODE_ENV === 'production'
+  ? `mongodb+srv://lambtsa:${process.env.MONGO_DB_PASSWORD_PROD}@currency-api-prod.twcxd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+  : `mongodb+srv://lambtsa:${process.env.MONGO_DB_PASSWORD_DEV}@lambtsacluster.ncmw7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 

@@ -5,7 +5,7 @@ const routes = require('./routes');
 const { sendMonthlyEmail } = require('./modules/emails');
 const Email = require('./modules/schemas/emailsSchema');
 const CurrencyDB = require('./modules/schemas/currencySchema');
-const { getCurrencies } = require('./helpers');
+const { getNewRates } = require('./modules/helpers');
 
 const app = express();
 
@@ -22,26 +22,26 @@ app.use(cors({
 
 app.use('/', routes);
 
-(async () => {
-  try {
-    const currencies = await getCurrencies();
-    currencies.forEach(currency => {
-      new CurrencyDB({
-        initials: currency.initials,
-        name: currency.name,
-        rate: currency.rate,
-        rateDelta: 0,
-        logo: currency.logo,
-      }).save();
-    });
-  } catch (err) {
-    console.log(err);
-  }
-})();
+// (async () => {
+//   try {
+//     const currencies = await getNewRates();
+//     currencies.forEach(currency => {
+//       new CurrencyDB({
+//         initials: currency.initials,
+//         name: currency.name,
+//         rate: currency.rate,
+//         rateDelta: 0,
+//         logo: currency.logo,
+//       }).save();
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// })();
 
 cron.schedule('0 */1 * * *', async () => {
   try {
-    const updatedCurrencies = await getCurrencies();
+    const updatedCurrencies = await getNewRates();
     updatedCurrencies.forEach(async currency => {
       const oldCurrency = await CurrencyDB.find({ initials: currency.initials });
       await CurrencyDB.findOneAndUpdate(

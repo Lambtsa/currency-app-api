@@ -2,6 +2,7 @@ const express = require('express');
 // const repository = require('../db/repository');
 const { sendOwnerEmail } = require('../modules/emails');
 const Email = require('../modules/schemas/emailsSchema');
+const CurrencyDB = require('../modules/schemas/currencySchema');
 
 const router = express.Router();
 
@@ -29,18 +30,16 @@ router.post('/addEmail', async (req, res, next) => {
   }
 });
 
-// router.get('/currencies', (req, res, next) => {
-//   try {
-//     repository.getAllCurrencies()
-//       .then(data => {
-//         res
-//           .status(200)
-//           .json(data.rows);
-//       });
-//   } catch (err) {
-//     // Need to handle this better
-//     next(err);
-//   }
-// });
+router.get('/currencies', async (req, res, next) => {
+  try {
+    const currencies = await CurrencyDB.find();
+    res
+      .status(200)
+      .json(currencies);
+  } catch (err) {
+    // Need to handle this better
+    next(err);
+  }
+});
 
 module.exports = router;

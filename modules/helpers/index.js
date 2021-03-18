@@ -4,7 +4,7 @@ const { fetchCrypto, fetchCurrencies } = process.env.NODE_ENV === 'production'
 
 const { createCryptoRatesObj, createCurrencyRatesObj } = require('./helpers');
 
-const getCurrencies = async () => {
+const getNewRates = async () => {
   const rawCryptoData = await fetchCrypto();
   const rawCurrenciesData = await fetchCurrencies();
   const cryptoData = createCryptoRatesObj(rawCryptoData);
@@ -16,5 +16,5 @@ const getCurrencies = async () => {
 };
 
 module.exports = {
-  getCurrencies,
+  getNewRates,
 };
