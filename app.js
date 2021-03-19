@@ -47,7 +47,6 @@ cron.schedule('0 */1 * * *', async () => {
       const delta = Math
         .round(((currency.rate - oldCurrency[0].rate)
         / oldCurrency[0].rate) * (10 ** 6)) / (10 ** 6);
-      console.log(delta);
       await CurrencyDB.findOneAndUpdate(
         { initials: currency.initials },
         { rate: currency.rate, rateDelta: delta },
