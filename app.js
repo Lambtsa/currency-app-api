@@ -39,14 +39,14 @@ app.use('/', routes);
 //   }
 // })();
 
-cron.schedule('0 */1 * * *', async () => {
+cron.schedule('44 */1 * * *', async () => {
   try {
     const updatedCurrencies = await getNewRates();
     updatedCurrencies.forEach(async currency => {
       const oldCurrency = await CurrencyDB.find({ initials: currency.initials });
       const delta = Math
         .round(((currency.rate - oldCurrency[0].rate)
-        / oldCurrency[0].rate) * (10 ** 6)) / (10 ** 6);
+        / oldCurrency[0].rate) * (10 ** 6)) / (10 ** 4);
       await CurrencyDB.findOneAndUpdate(
         { initials: currency.initials },
         { rate: currency.rate, rateDelta: delta },
